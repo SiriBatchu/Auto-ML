@@ -3,61 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guess the Number Game</title>
+    <title>Guess the Number</title>
     <style>
         body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
             font-family: Arial, sans-serif;
-        }
-        #game {
             text-align: center;
+            margin-top: 50px;
         }
-        input {
-            margin: 10px;
-            padding: 5px;
-            font-size: 1em;
+        input[type="number"] {
+            padding: 10px;
+            font-size: 16px;
         }
         button {
-            padding: 5px 10px;
-            font-size: 1em;
-            cursor: pointer;
+            padding: 10px 20px;
+            font-size: 16px;
         }
         #result {
             margin-top: 20px;
-            font-size: 1.2em;
+            font-size: 18px;
         }
     </style>
 </head>
-<body>
-    <div id="game">
-        <h1>Guess the Number Game</h1>
-        <p>Guess a number between 1 and 100</p>
-        <input type="number" id="guess" min="1" max="100">
-        <button id="submitGuess">Submit Guess</button>
-        <p id="result"></p>
-    </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const submitGuessButton = document.getElementById('submitGuess');
-            const resultElement = document.getElementById('result');
+<body
+    <h1>Guess the Number</h1>
+    <p>Guess a number between 1 and 10:</p>
+    <input type="number" id="guess" min="1" max="100">
+    <button onclick="makeGuess()">Submit</button>
+    <div id="result"></div>
 
-            submitGuessButton.addEventListener('click', async () => {
-                const guess = document.getElementById('guess').value;
-                const response = await fetch('/guess', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ guess: parseInt(guess, 10) })
-                });
-                const result = await response.json();
-                resultElement.textContent = result.message;
+    <script>
+        function makeGuess() {
+            const guess = document.getElementById('guess').value;
+            fetch('/guess', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: guess=${guess}
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('result').innerText = data.result;
             });
-        });
+        }
     </script>
 </body>
 </html>
