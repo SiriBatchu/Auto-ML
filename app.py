@@ -1,10 +1,10 @@
 from flask import Flask, render_template, request, jsonify
 import random
 
-app = Flask(__name__)
+app = Flask(_name_)
 
-# Generate a random number between 1 and 100
-target_number = random.randint(1, 100)
+# Initialize the secret number
+secret_number = random.randint(1, 10)
 
 @app.route('/')
 def index():
@@ -12,15 +12,15 @@ def index():
 
 @app.route('/guess', methods=['POST'])
 def guess():
-    global target_number
-    guess = int(request.json['guess'])
-    if guess < target_number:
-        return jsonify({'message': 'Too low!'})
-    elif guess > target_number:
-        return jsonify({'message': 'Too high!'})
+    global secret_number
+    guess = int(request.form['guess'])
+    if guess < secret_number:
+        return jsonify({'result': 'Too low!'})
+    elif guess > secret_number:
+        return jsonify({'result': 'Too high!'})
     else:
-        target_number = random.randint(1, 100)  # Reset the game
-        return jsonify({'message': 'Correct! You guessed the number!'})
+        secret_number = random.randint(1, 10)  # Reset the game
+        return jsonify({'result': 'Correct! The number has been reset.'})
 
-if __name__ == '__main__':
-    app.run(debug=True)
+if _name_ == '_main_':
+    app.run(debug=True,port=5003)
